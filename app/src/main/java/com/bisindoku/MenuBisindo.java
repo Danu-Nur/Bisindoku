@@ -26,11 +26,31 @@ public class MenuBisindo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuBisindo.this, ListMenu.class);
-                intent.putExtra("key",1);
+                intent.putExtra("key", "organ");
                 startActivity(intent);
                 finish();
             }
         });
+
+        binding.ekspresiWajah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuBisindo.this, ListMenu.class);
+                intent.putExtra("key", "ekspresi");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+//        binding.kuis.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MenuBisindo.this, ListMenu.class);
+//
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 //        EdgeToEdge.enable(this);
 //        setContentView(R.layout.activity_menu_bisindo);
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
