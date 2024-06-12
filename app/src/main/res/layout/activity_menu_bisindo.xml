@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:gravity="center"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_theme"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".MenuBisindo">
 
     <LinearLayout
@@ -19,33 +20,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/white"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/background_title"
-            android:text="BISINDOKU"/>
+            android:gravity="center"
+            android:text="@string/bisindoku"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
 
-        <Button
+        <TextView
+            android:id="@+id/btnOrganTubuh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            android:text="Nama Organ Tubuh"/>
+            android:background="@drawable/background_button_menu"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="13dp"
+            android:text="@string/nama_organ_tubuh"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
 
-        <Button
+        <TextView
+            android:id="@+id/ekspresiWajah"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            android:text="Ekspresi Wajah"/>
+            android:background="@drawable/background_button_menu"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="13dp"
+            android:text="@string/ekspresi_wajah"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
 
-        <Button
+        <TextView
+            android:id="@+id/kuis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            android:text="Kuis"/>
+            android:background="@drawable/background_button_menu"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="13dp"
+            android:text="@string/kuis"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
+
     </LinearLayout>
 
 

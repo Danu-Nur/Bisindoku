@@ -5,12 +5,12 @@
         android:bottomLeftRadius="10dp"
         android:bottomRightRadius="10dp"
         android:topLeftRadius="10dp"
-        android:topRightRadius="10dp"/>
+        android:topRightRadius="10dp" />
 
     <gradient
-        android:angle="45"
-        android:endColor="#01f1fa"
-        android:startColor="#0189ff"
+        android:angle="50"
+        android:endColor="#0D522C"
+        android:startColor="#0D522C"
         android:type="linear" />
 
     <!--If your shape requires only one solid color-->

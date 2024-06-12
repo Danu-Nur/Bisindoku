@@ -4,11 +4,11 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-06-11T07:29:52.581761600Z">
+        <DropdownSelection timestamp="2024-06-12T02:45:26.864646100Z">
           <Target type="DEFAULT_BOOT">
-            <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=R5CN10379FA" />
-            </handle>
+            <template>
+              <DeviceId pluginId="FirebaseDirectAccess" type="TEMPLATE" identifier="model_id=redfin/30" />
+            </template>
           </Target>
         </DropdownSelection>
         <DialogSelection />
