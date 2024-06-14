@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -30,14 +32,14 @@ public class ListMenu extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         Intent intent = getIntent();
-        String value = intent.getStringExtra("key");
+        String menu = intent.getStringExtra("menu");
         list = new ArrayList<>();
         String[] organ = {"Otak", "Telinga", "Mulut", "Ginjal", "Paru-paru", "Kerongkongan", "Usus", "Pankreas", "Hati", "Lambung"};
         String[] ekspresi = {"Senang", "Marah", "Sedih", "Malu", "Menangis", "Tersenyum", "Tertawa", "Kaget", "Takut", "Bingung"};
 
-        if ("organ".equals(value)) {
+        if ("organ".equals(menu)) {
             addDataToList(organ);
-        } else if ("ekspresi".equals(value)) {
+        } else if ("ekspresi".equals(menu)) {
             addDataToList(ekspresi);
         }
 
@@ -65,6 +67,18 @@ public class ListMenu extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
                 return false;
+            }
+        });
+
+        // Set up item click listener for ListView
+        binding.lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = adapter.getItem(position);
+                Intent intent = new Intent(ListMenu.this, PlayVideoActivity.class);
+                intent.putExtra("fileId", selectedItem);
+                intent.putExtra("menu", menu); // Assuming 'menu' refers to the 'key' value passed from the previous activity
+                startActivity(intent);
             }
         });
     }
