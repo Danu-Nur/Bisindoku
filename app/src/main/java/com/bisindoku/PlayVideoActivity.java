@@ -22,10 +22,17 @@ public class PlayVideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityPlayVideoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        EdgeToEdge.enable(this);
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
+
         String fileId = getIntent().getStringExtra("fileId");
         binding.textVideo.setText(fileId);
 
-        String videoUrl = "https://drive.google.com/uc?export=download&id=1iIZ9EhwCnaMAwW-ENLGZTMkCMq_OsrmP\n";
+        String videoUrl = "https://drive.google.com/uc?export=download&id=1iIZ9EhwCnaMAwW-ENLGZTMkCMq_OsrmP";
         Uri uri = Uri.parse(videoUrl);
         binding.videoView.setVideoURI(uri);
 
@@ -34,13 +41,7 @@ public class PlayVideoActivity extends AppCompatActivity {
         mediaController.setAnchorView(binding.videoView);
 
         binding.videoView.start();
-//        EdgeToEdge.enable(this);
-//        setContentView(R.layout.activity_play_video);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
+
     }
 
     @Override

@@ -11,7 +11,11 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.bisindoku.databinding.ActivityListMenuBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,6 +34,12 @@ public class ListMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityListMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         Intent intent = getIntent();
         String menu = intent.getStringExtra("menu");
@@ -44,7 +54,7 @@ public class ListMenu extends AppCompatActivity {
         }
 
         // Set up the adapter with the custom layout
-        adapter = new ArrayAdapter<>(this, R.layout.list_item, list);
+        adapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.text1, list);
         binding.lv1.setAdapter(adapter);
 
         // Change the divider color

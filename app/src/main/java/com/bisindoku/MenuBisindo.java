@@ -19,14 +19,20 @@ public class MenuBisindo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityMenuBisindoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
         binding.btnOrganTubuh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuBisindo.this, ListMenu.class);
-                intent.putExtra("key", "organ");
+                intent.putExtra("menu", "organ");
                 startActivity(intent);
                 finish();
             }
@@ -36,7 +42,7 @@ public class MenuBisindo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuBisindo.this, ListMenu.class);
-                intent.putExtra("key", "ekspresi");
+                intent.putExtra("menu", "ekspresi");
                 startActivity(intent);
                 finish();
             }
@@ -51,12 +57,6 @@ public class MenuBisindo extends AppCompatActivity {
 //                finish();
 //            }
 //        });
-//        EdgeToEdge.enable(this);
-//        setContentView(R.layout.activity_menu_bisindo);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
+
     }
 }
