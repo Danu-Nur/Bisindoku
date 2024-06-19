@@ -22,12 +22,12 @@ public class MenuBisindo extends AppCompatActivity {
 
         binding = ActivityMenuBisindoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        EdgeToEdge.enable(this);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+//        EdgeToEdge.enable(this);
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
         binding.btnOrganTubuh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -24,12 +24,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="SKOR : "
             android:textSize="22sp" />
 
         <TextView
             android:id="@+id/tvSkor"
             android:layout_width="50dp"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:text="0"
             android:textSize="22sp" />
@@ -76,43 +78,49 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <RadioButton
+        <TextView
             android:id="@+id/rbPilihanJawaban1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
             android:layout_weight="1"
+            android:background="@drawable/background_button_menu"
             android:gravity="center"
-            android:textSize="18sp" />
+            android:text="Opsi A"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
-        <RadioButton
+        <TextView
             android:id="@+id/rbPilihanJawaban2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
             android:layout_weight="1"
+            android:background="@drawable/background_button_menu"
             android:gravity="center"
-            android:textSize="18sp" />
+            android:text="Opsi B"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
     <!--TOMBOL SUBMIT-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linePilihanJawaban"
-        android:gravity="center">
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/linePilihanJawaban"-->
+    <!--        android:gravity="center">-->
 
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/linePilihanJawaban"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:background="#5ed76c"
-            android:gravity="center"
-            android:text="SUBMIT" />
-    </LinearLayout>
+    <!--        <Button-->
+    <!--            android:id="@+id/btnSubmit"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@id/linePilihanJawaban"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_margin="10dp"-->
+    <!--            android:background="#5ed76c"-->
+    <!--            android:gravity="center"-->
+    <!--            android:text="SUBMIT" />-->
+    <!--    </LinearLayout>-->
 
 </RelativeLayout>

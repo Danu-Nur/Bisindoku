@@ -34,12 +34,12 @@ public class ListMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityListMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        EdgeToEdge.enable(this);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+//        EdgeToEdge.enable(this);
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
 
         Intent intent = getIntent();
         String menu = intent.getStringExtra("menu");
