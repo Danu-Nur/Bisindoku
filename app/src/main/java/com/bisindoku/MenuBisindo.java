@@ -48,15 +48,15 @@ public class MenuBisindo extends AppCompatActivity {
             }
         });
 
-//        binding.kuis.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MenuBisindo.this, ListMenu.class);
-//
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
+        binding.kuis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuBisindo.this, QuizPilihanGandaActivity.class);
+
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 }

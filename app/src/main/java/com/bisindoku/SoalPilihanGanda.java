@@ -1,6 +1,7 @@
 package com.bisindoku;
 
 public class SoalPilihanGanda {
+
     //membuat array untuk pertanyaan
 //    public String pertanyaan[] = {
 //            "Siapa nama presiden Indonesia yang pertama ?",
@@ -16,24 +17,20 @@ public class SoalPilihanGanda {
 
     //membuat array untuk pilihan jawaban
     private String pilihanJawaban[][] = {
-            {"Ir. Soekarno", "Joko Widodo", "Susilo Bambang Yudhoyono"},
-            {"UUD 1945", "Pancasila", "Bhinneka Tunggal Ika"},
-            {"Berbeda-beda tetapi tetap satu", "Bersama selamanya", "Bersatu teguh bercerai runtuh"},
-            {"Semarang", "Surabaya", "Jakarta"},
-            {"Jepang", "Belanda", "Malaysia"},
-            {"Bambu runcing", "Ketapel", "Shotgun"},
-            {"Tugu Muda", "Patung Pancoran", "Monas"},
-            {"Proklamasi", "Pancasila", "Pembukaan UUD 1945"},
-            {"Jawa", "Sumatera", "Kalimantan"},
+            {"Mata", "Hidung"},
+            {"Kaki", "Tangan"},
+            {"Mata", "Jantung"},
+            {"Senyum", "Sedih"},
+            {"Senang", "Marah"},
     };
 
     //membuat array untuk jawaban benar
     private String jawabanBenar[] = {
-            "Ir. Soekarno",
-            "Pancasila",
-            "Berbeda-beda tetapi tetap satu",
-            "Jakarta",
-            "Belanda",
+            "Mata",
+            "Tangan",
+            "Jantung",
+            "Sedih",
+            "Marah",
     };
 
     //membuat getter untuk mengambil pertanyaan
@@ -53,12 +50,12 @@ public class SoalPilihanGanda {
         String jawaban2 = pilihanJawaban[x][1];
         return jawaban2;
     }
-
-    //membuat getter untuk mengambil pilihan jawaban 3
-    public String getPilihanJawaban3(int x) {
-        String jawaban3 = pilihanJawaban[x][2];
-        return jawaban3;
-    }
+//
+//    //membuat getter untuk mengambil pilihan jawaban 3
+//    public String getPilihanJawaban3(int x) {
+//        String jawaban3 = pilihanJawaban[x][2];
+//        return jawaban3;
+//    }
 
     //membuat getter untuk mengambil jawaban benar
     public String getJawabanBenar(int x) {
