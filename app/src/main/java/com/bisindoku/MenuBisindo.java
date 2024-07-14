@@ -52,7 +52,6 @@ public class MenuBisindo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuBisindo.this, QuizPilihanGandaActivity.class);
-
                 startActivity(intent);
                 finish();
             }

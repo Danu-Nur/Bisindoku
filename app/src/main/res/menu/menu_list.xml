@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_organ"
+        android:title="@string/nama_organ_tubuh" />
+    <item
+        android:id="@+id/action_ekspresi"
+        android:title="@string/ekspresi_wajah" />
+    <item
+        android:id="@+id/action_kuis"
+        android:title="@string/kuis" />
+</menu>

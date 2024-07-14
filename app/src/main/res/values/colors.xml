@@ -2,5 +2,25 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="accent">#E5FFF4</color>
+    <color name="secondary">#36AB4F</color>
+    <color name="main">#2d8d64</color>
+    <color name="main2">#246B4D</color>
+
+    <color name="Light_Blue_50">#E1F5FE</color>
+    <color name="Light_Blue_100">#B3E5FC</color>
+    <color name="Light_Blue_200">#81D4FA</color>
+    <color name="Light_Blue_300">#4FC3F7</color>
+    <color name="Light_Blue_400">#29B6F6</color>
+    <color name="Light_Blue_500">#03A9F4</color>
+    <color name="Light_Blue_600">#039BE5</color>
+    <color name="Light_Blue_700">#0288D1</color>
+    <color name="Light_Blue_800">#0277BD</color>
+    <color name="Light_Blue_900">#01579B</color>
+    <color name="Light_Blue_A100">#80D8FF</color>
+    <color name="Light_Blue_A200">#40C4FF</color>
+    <color name="Light_Blue_A400">#00B0FF</color>
+    <color name="Light_Blue_A700">#0091EA</color>
+
 
 </resources>
