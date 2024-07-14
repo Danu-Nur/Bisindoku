@@ -16,7 +16,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bisindoku.databinding.ActivityPlayVideoBinding;
-import com.bisindoku.helper.MenuItems;
 import com.bisindoku.server.Server;
 
 public class PlayVideoActivity extends AppCompatActivity {
