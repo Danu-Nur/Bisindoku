@@ -12,30 +12,6 @@
         android:id="@+id/customTollbar"
         layout="@layout/custom_toolbar" />
 
-    <!--SKOR-->
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/lineSkor"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/customTollbar"-->
-    <!--        android:layout_alignParentRight="true"-->
-    <!--        android:layout_marginRight="10dp">-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:text="SKOR : "-->
-    <!--            android:textSize="22sp" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/tvSkor"-->
-    <!--            android:layout_width="50dp"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:text="0"-->
-    <!--            android:textSize="22sp" />-->
-    <!--    </LinearLayout>-->
     <LinearLayout
         android:id="@+id/Header"
         android:layout_width="match_parent"
@@ -90,8 +66,8 @@
         <VideoView
             android:id="@+id/videoView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/textVideo"
+            android:layout_height="350dp"
+            android:layout_gravity="center"
             android:layout_centerInParent="true" />
     </LinearLayout>
 
@@ -130,24 +106,5 @@
             android:textSize="20sp" />
 
     </LinearLayout>
-
-    <!--TOMBOL SUBMIT-->
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@+id/linePilihanJawaban"-->
-    <!--        android:gravity="center">-->
-
-    <!--        <Button-->
-    <!--            android:id="@+id/btnSubmit"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_below="@id/linePilihanJawaban"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:layout_margin="10dp"-->
-    <!--            android:background="#5ed76c"-->
-    <!--            android:gravity="center"-->
-    <!--            android:text="SUBMIT" />-->
-    <!--    </LinearLayout>-->
 
 </LinearLayout>

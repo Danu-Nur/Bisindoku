@@ -1,38 +1,60 @@
 package com.bisindoku;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.ContextCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.bisindoku.databinding.ActivityQuizPilihanGandaBinding;
+import com.bisindoku.model.Kuis;
+import com.bisindoku.server.Server;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class QuizPilihanGandaActivity extends AppCompatActivity {
 
     private ActivityQuizPilihanGandaBinding binding;
-    SoalPilihanGanda soalPG = new SoalPilihanGanda();
-    int skor = 0;
-    int arr; //untuk menampung nilai panjang array
-    int x;   //menunjukkan konten sekarang
-    String jawaban; //menampung jawaban benar
+    private static final String API_URL_QUIZ = Server.URL + "api/kuis";
+    private static final String URL_DOMAIN = Server.URL;
+
+    private List<Kuis> questionList;
+    private int currentQuestionIndex = 0;
+    private Random random;
+    private static final String TAG = "Kuis";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
         binding = ActivityQuizPilihanGandaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        binding.tvSkor.setText("" + skor);
+
         binding.customTollbar.imageButtonDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,31 +63,32 @@ public class QuizPilihanGandaActivity extends AppCompatActivity {
         });
         binding.customTollbar.imageViewLogo.setImageResource(R.drawable.quiz);
 
-        String videoUrl = "https://drive.google.com/uc?export=download&id=1iIZ9EhwCnaMAwW-ENLGZTMkCMq_OsrmP";
-        Uri uri = Uri.parse(videoUrl);
-        binding.videoView.setVideoURI(uri);
+        random = new Random();
+        questionList = new ArrayList<>();
+        fetchDataFromApi(API_URL_QUIZ);
 
-        MediaController mediaController = new MediaController(this);
-        binding.videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(binding.videoView);
+        binding.rbPilihanJawaban1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkAnswer(binding.rbPilihanJawaban1);
+            }
+        });
 
-        binding.videoView.start();
+        binding.rbPilihanJawaban2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkAnswer(binding.rbPilihanJawaban2);
+            }
+        });
 
         binding.imageButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuizPilihanGandaActivity.this, MenuBisindo.class);  // Replace SpecificActivity with your target activity
+                Intent intent = new Intent(QuizPilihanGandaActivity.this, MenuBisindo.class);
                 startActivity(intent);
                 finish();
             }
         });
-
-//        setContentView(R.layout.activity_quiz_pilihan_ganda);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
     }
 
     private void showPopupMenu(View view) {
@@ -98,10 +121,125 @@ public class QuizPilihanGandaActivity extends AppCompatActivity {
         popup.show();
     }
 
+    private void fetchDataFromApi(String apiUrl) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                apiUrl,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            questionList.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String id = jsonObject.getString("id");
+                                String pertanyaan = jsonObject.getString("pertanyaan");
+                                String linkVideo = jsonObject.getString("link_video");
+                                String benar = jsonObject.getString("benar");
+                                String salah = jsonObject.getString("salah");
+
+                                Kuis kuis = new Kuis(id, pertanyaan, linkVideo, benar, salah);
+                                questionList.add(kuis);
+                            }
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Error parsing JSON data: " + e.getMessage());
+                            e.printStackTrace();
+                            Snackbar.make(binding.videoView, "Error parsing JSON data", Snackbar.LENGTH_LONG).show();
+                        }
+                        Collections.shuffle(questionList);
+                        showNextQuestion();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "Error fetching data: " + error.getMessage());
+                        Snackbar.make(binding.videoView, "Error fetching data", Snackbar.LENGTH_LONG).show();
+                    }
+                }
+        );
+
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void showNextQuestion() {
+        if (currentQuestionIndex >= questionList.size()) {
+            currentQuestionIndex = 0;
+            Collections.shuffle(questionList);
+        }
+
+        Kuis kuis = questionList.get(currentQuestionIndex);
+//        binding.textVideo.setText(kuis.getPertanyaan());
+        binding.videoView.setVideoURI(Uri.parse(URL_DOMAIN + kuis.getLink_video()));
+
+        MediaController mediaController = new MediaController(this);
+        binding.videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(binding.videoView);
+
+        binding.videoView.start();
+
+        // Randomize answer positions
+        if (random.nextBoolean()) {
+            binding.rbPilihanJawaban1.setText(kuis.getBenar());
+            binding.rbPilihanJawaban2.setText(kuis.getSalah());
+        } else {
+            binding.rbPilihanJawaban1.setText(kuis.getSalah());
+            binding.rbPilihanJawaban2.setText(kuis.getBenar());
+        }
+    }
+
+    private void checkAnswer(View selectedButton) {
+        Kuis kuis = questionList.get(currentQuestionIndex);
+        boolean isCorrect = ((TextView) selectedButton).getText().equals(kuis.getBenar());
+
+        String message;
+        if (isCorrect) {
+            selectedButton.setBackgroundColor(Color.GREEN);
+            message = "Selamat jawaban anda benar!.<br> Apakah Anda Ingin Lanjut Ke Soal Berikutnya ?";
+        } else {
+            selectedButton.setBackgroundColor(Color.RED);
+            if (binding.rbPilihanJawaban1.getText().equals(kuis.getBenar())) {
+                binding.rbPilihanJawaban1.setBackgroundColor(Color.GREEN);
+            } else {
+                binding.rbPilihanJawaban2.setBackgroundColor(Color.GREEN);
+            }
+            message = "Jawaban anda salah. <br/> Jawaban yang benar adalah <b>" + kuis.getBenar() + "</b>.<br> Apakah Anda Ingin Lanjut Ke Soal Berikutnya ?";
+        }
+
+        new AlertDialog.Builder(this)
+                .setMessage(Html.fromHtml(message))
+                .setPositiveButton("YA", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        currentQuestionIndex++;
+                        resetButtons();
+                        showNextQuestion();
+                    }
+                })
+                .setNegativeButton("TIDAK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(QuizPilihanGandaActivity.this, MenuBisindo.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
+
+
+    private void resetButtons() {
+        binding.rbPilihanJawaban1.setBackground(ContextCompat.getDrawable(this, R.drawable.background_button_menu));
+        binding.rbPilihanJawaban2.setBackground(ContextCompat.getDrawable(this, R.drawable.background_button_menu));
+    }
+
     @Override
     public void onBackPressed() {
         // Navigate to a specific activity when back button is pressed
-        Intent intent = new Intent(QuizPilihanGandaActivity.this, MenuBisindo.class);  // Replace SpecificActivity with your target activity
+        Intent intent = new Intent(QuizPilihanGandaActivity.this, MenuBisindo.class);
         startActivity(intent);
         finish();  // Optional: Call finish() if you don't want the current activity to remain in the back stack
         super.onBackPressed();

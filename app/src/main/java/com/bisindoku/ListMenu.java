@@ -47,7 +47,7 @@ public class ListMenu extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private static final String API_URL_EKSPRESI = Server.URL + "api/ekspresi";
     private static final String API_URL_ORGAN = Server.URL + "api/organs";
-    private static final String API_URL_QUIZ = Server.URL + "quiz";
+
     private String detailMenu = "";
     private String menuType = "";
     private static final String TAG = "ListMenu";
