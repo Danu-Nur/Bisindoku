@@ -34,14 +34,21 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         // Display the splash screen for a specific duration
-        int splashTime = 3000; // milliseconds (3 seconds)
-        new Handler().postDelayed(() -> {
-            // Start the main activity after the delay
-            Intent intent = new Intent(MainActivity.this, MenuBisindo.class);
-            startActivity(intent);
-            finish();
-        }, splashTime);
-
+//        int splashTime = 3000; // milliseconds (3 seconds)
+//        new Handler().postDelayed(() -> {
+//            // Start the main activity after the delay
+//            Intent intent = new Intent(MainActivity.this, MenuBisindo.class);
+//            startActivity(intent);
+//            finish();
+//        }, splashTime);
+        binding.buttonTextMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MenuBisindo.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 //        binding.idText.setText("testing streaming");
     }
 }
