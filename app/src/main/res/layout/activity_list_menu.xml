@@ -25,34 +25,23 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-
             android:iconifiedByDefault="false"
-            android:queryHint="Search Here"
-            android:textColor="@color/white" />
+            android:queryHint="Search Here" />
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/lv1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/searchView"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp" />
 
-            <ListView
-                android:id="@+id/lv1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-        </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
 </LinearLayout>
-

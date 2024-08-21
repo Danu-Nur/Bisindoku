@@ -58,6 +58,7 @@ public class ListMenu extends AppCompatActivity {
         binding = ActivityListMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         SwipeRefreshLayout swipeRefreshLayout = binding.swipeRefreshLayout;
+        swipeRefreshLayout.setDistanceToTriggerSync(300);
         Intent intent = getIntent();
         String menu = intent.getStringExtra("menu");
 //        String detailMenu = "";
