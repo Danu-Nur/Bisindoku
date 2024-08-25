@@ -49,6 +49,10 @@ public class QuizPilihanGandaActivity extends AppCompatActivity {
     private Random random;
     private static final String TAG = "Kuis";
 
+    private int correctAnswers = 0;
+    private int incorrectAnswers = 0;
+    private int totalQuestions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,6 +153,7 @@ public class QuizPilihanGandaActivity extends AppCompatActivity {
                             Snackbar.make(binding.videoView, "Error parsing JSON data", Snackbar.LENGTH_LONG).show();
                         }
                         Collections.shuffle(questionList);
+                        totalQuestions = questionList.size(); // Set total questions
                         showNextQuestion();
                     }
                 },
@@ -165,13 +170,12 @@ public class QuizPilihanGandaActivity extends AppCompatActivity {
     }
 
     private void showNextQuestion() {
-        if (currentQuestionIndex >= questionList.size()) {
-            currentQuestionIndex = 0;
-            Collections.shuffle(questionList);
+        if (currentQuestionIndex >= totalQuestions) {
+            showFinalScore(); // Show final score at the end
+            return;
         }
 
         Kuis kuis = questionList.get(currentQuestionIndex);
-//        binding.textVideo.setText(kuis.getPertanyaan());
         binding.videoView.setVideoURI(Uri.parse(URL_DOMAIN + kuis.getLink_video()));
 
         MediaController mediaController = new MediaController(this);
@@ -188,6 +192,8 @@ public class QuizPilihanGandaActivity extends AppCompatActivity {
             binding.rbPilihanJawaban1.setText(kuis.getSalah());
             binding.rbPilihanJawaban2.setText(kuis.getBenar());
         }
+
+        updateScoreInHeader(); // Update score in the header
     }
 
     private void checkAnswer(View selectedButton) {
@@ -196,16 +202,18 @@ public class QuizPilihanGandaActivity extends AppCompatActivity {
 
         String message;
         if (isCorrect) {
+            correctAnswers++;
             selectedButton.setBackgroundColor(Color.GREEN);
-            message = "Selamat jawaban anda benar!.<br> Apakah Anda Ingin Lanjut Ke Soal Berikutnya ?";
+            message = "Selamat jawaban anda benar!<br> Apakah Anda Ingin Lanjut Ke Soal Berikutnya?";
         } else {
+            incorrectAnswers++;
             selectedButton.setBackgroundColor(Color.RED);
             if (binding.rbPilihanJawaban1.getText().equals(kuis.getBenar())) {
                 binding.rbPilihanJawaban1.setBackgroundColor(Color.GREEN);
             } else {
                 binding.rbPilihanJawaban2.setBackgroundColor(Color.GREEN);
             }
-            message = "Jawaban anda salah. <br/> Jawaban yang benar adalah <b>" + kuis.getBenar() + "</b>.<br> Apakah Anda Ingin Lanjut Ke Soal Berikutnya ?";
+            message = "Jawaban anda salah. <br/> Jawaban yang benar adalah <b>" + kuis.getBenar() + "</b>.<br> Apakah Anda Ingin Lanjut Ke Soal Berikutnya?";
         }
 
         new AlertDialog.Builder(this)
@@ -230,6 +238,31 @@ public class QuizPilihanGandaActivity extends AppCompatActivity {
                 .show();
     }
 
+    private void updateScoreInHeader() {
+        int totalAnswered = correctAnswers + incorrectAnswers;
+        int score = totalAnswered == 0 ? 0 : (correctAnswers * 100) / totalQuestions;
+        binding.textViewScore.setText("Skor: " + score);
+    }
+
+    private void showFinalScore() {
+        int finalScore = (correctAnswers * 100) / totalQuestions;
+
+        String message = "Kuis Selesai!<br/>Benar: " + correctAnswers + "<br/>Salah: " + incorrectAnswers + "<br/>Skor Akhir: " + finalScore;
+
+        new AlertDialog.Builder(this)
+                .setTitle("Skor Akhir")
+                .setMessage(Html.fromHtml(message))
+                .setPositiveButton("KEMBALI KE MENU", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(QuizPilihanGandaActivity.this, MenuBisindo.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
 
     private void resetButtons() {
         binding.rbPilihanJawaban1.setBackground(ContextCompat.getDrawable(this, R.drawable.background_button_menu));
@@ -245,3 +278,4 @@ public class QuizPilihanGandaActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 }
+

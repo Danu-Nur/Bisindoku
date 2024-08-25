@@ -49,7 +49,7 @@ public class ListMenu extends AppCompatActivity {
     private static final String API_URL_ORGAN = Server.URL + "api/organs";
 
     private String detailMenu = "";
-    private String menuType = "";
+    private String menu = "";
     private static final String TAG = "ListMenu";
 
     @Override
@@ -57,10 +57,9 @@ public class ListMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityListMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        SwipeRefreshLayout swipeRefreshLayout = binding.swipeRefreshLayout;
-        swipeRefreshLayout.setDistanceToTriggerSync(300);
+//        SwipeRefreshLayout swipeRefreshLayout = binding.swipeRefreshLayout;
         Intent intent = getIntent();
-        String menu = intent.getStringExtra("menu");
+        menu = intent.getStringExtra("menu");
 //        String detailMenu = "";
         menuItemsArrayList = new ArrayList<>();
 
@@ -77,11 +76,19 @@ public class ListMenu extends AppCompatActivity {
         binding.lv1.setAdapter(adapter);
 
         // Set up SwipeRefreshLayout listener
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                selectMenu(menu);
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
+
+        binding.refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
+            public void onClick(View v) {
+                // Trigger refresh action
                 selectMenu(menu);
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -147,11 +154,13 @@ public class ListMenu extends AppCompatActivity {
                 if (itemId == R.id.action_organ) {
                     detailMenu = "Detail Nama Organ Tubuh";
                     binding.customTollbar.imageViewLogo.setImageResource(R.drawable.organ);
+                    menu = "organ";
                     fetchDataFromApi(API_URL_ORGAN, "organ");
                     return true;
                 } else if (itemId == R.id.action_ekspresi) {
                     detailMenu = "Detail Ekspresi Wajah";
                     binding.customTollbar.imageViewLogo.setImageResource(R.drawable.ekspresi);
+                    menu = "ekspresi";
                     fetchDataFromApi(API_URL_EKSPRESI, "ekspresi");
                     return true;
                 } else if (itemId == R.id.action_kuis) {
