@@ -8,20 +8,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.bisindoku.databinding.ActivityPlayVideoBinding;
+import com.bisindoku.model.MenuItems;
 import com.bisindoku.server.Server;
+
+import java.util.List;
 
 public class PlayVideoActivity extends AppCompatActivity {
 
     private ActivityPlayVideoBinding binding;
     private static final String URL_DOMAIN = Server.URL;
+    private List<MenuItems> videoList;  // List to hold videos
+    private int currentVideoIndex = 0;  // Track current video
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,28 +38,34 @@ public class PlayVideoActivity extends AppCompatActivity {
         });
         String menu = getIntent().getStringExtra("menu");
 
+        // Retrieve the passed data from ListMenu
+        videoList = getIntent().getParcelableArrayListExtra("videoList");
+        currentVideoIndex = getIntent().getIntExtra("currentVideoIndex", 0);
+
         if ("organ".equals(menu)) {
             binding.customTollbar.imageViewLogo.setImageResource(R.drawable.organ);
         } else if ("ekspresi".equals(menu)) {
             binding.customTollbar.imageViewLogo.setImageResource(R.drawable.ekspresi);
         }
 
-        String fileId = getIntent().getStringExtra("name");
-        String titleDetail = getIntent().getStringExtra("title");
-        String videoUrl = URL_DOMAIN + getIntent().getStringExtra("videoLink");
+        displayVideo(currentVideoIndex);
 
-        binding.textVideo.setText(fileId);
-        binding.textViewTitleVideo.setText(titleDetail);
-
-//        String videoUrl = "https://drive.google.com/uc?export=download&id=1iIZ9EhwCnaMAwW-ENLGZTMkCMq_OsrmP";
-        Uri uri = Uri.parse(videoUrl);
-        binding.videoView.setVideoURI(uri);
-
-        MediaController mediaController = new MediaController(this);
-        binding.videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(binding.videoView);
-
-        binding.videoView.start();
+//        String fileId = getIntent().getStringExtra("name");
+//        String titleDetail = getIntent().getStringExtra("title");
+//        String videoUrl = URL_DOMAIN + getIntent().getStringExtra("videoLink");
+//
+//        binding.textVideo.setText(fileId);
+//        binding.textViewTitleVideo.setText(titleDetail);
+//
+////        String videoUrl = "https://drive.google.com/uc?export=download&id=1iIZ9EhwCnaMAwW-ENLGZTMkCMq_OsrmP";
+//        Uri uri = Uri.parse(videoUrl);
+//        binding.videoView.setVideoURI(uri);
+//
+//        MediaController mediaController = new MediaController(this);
+//        binding.videoView.setMediaController(mediaController);
+//        mediaController.setAnchorView(binding.videoView);
+//
+//        binding.videoView.start();
 
         binding.imageButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +78,53 @@ public class PlayVideoActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        // Set the listeners for arrow buttons
+        binding.arrowBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentVideoIndex > 0) {
+                    currentVideoIndex--;
+                    displayVideo(currentVideoIndex);  // Load previous video
+                } else {
+                    Toast.makeText(PlayVideoActivity.this, "Ini video pertama", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        binding.arrowNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentVideoIndex < videoList.size() - 1) {
+                    currentVideoIndex++;
+                    displayVideo(currentVideoIndex);  // Load next video
+                } else {
+                    Toast.makeText(PlayVideoActivity.this, "Ini video terakhir", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(PlayVideoActivity.this, MenuBisindo.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+    }
+
+    // Function to display the current video
+    private void displayVideo(int index) {
+        MenuItems video = videoList.get(index);
+
+        String videoUrl = URL_DOMAIN + video.getLinkVideo();
+        Uri uri = Uri.parse(videoUrl);
+
+        binding.textVideo.setText(video.getNamaItem());  // Set the title text
+
+        binding.videoView.setVideoURI(uri);
+
+        MediaController mediaController = new MediaController(this);
+        binding.videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(binding.videoView);
+
+        binding.videoView.start();
     }
 
     private void showPopupMenu(View view) {

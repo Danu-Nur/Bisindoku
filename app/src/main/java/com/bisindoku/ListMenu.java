@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 public class ListMenu extends AppCompatActivity {
 
     private ActivityListMenuBinding binding;
@@ -126,6 +127,10 @@ public class ListMenu extends AppCompatActivity {
                 intent.putExtra("videoLink", selectedItem.getLinkVideo());
                 intent.putExtra("menu", menu);
                 intent.putExtra("title", detailMenu);
+
+                // Pass the full list of videos
+                intent.putParcelableArrayListExtra("videoList", new ArrayList<>(menuItemsArrayList));
+                intent.putExtra("currentVideoIndex", position); // Start from the clicked video
                 startActivity(intent);
             }
         });
